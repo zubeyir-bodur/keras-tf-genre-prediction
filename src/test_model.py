@@ -94,9 +94,9 @@ def repeat_length(string, length):
 
 
 def format_preds(movie, genres, preds):
-    '''
-	Format predictions from multi-hot encoding to human readable structure.
-	'''
+    """
+    Format predictions from multi-hot encoding to human readable structure.
+    """
 
     preds_map = {}
     for i in range(len(genres)):
@@ -133,6 +133,7 @@ def main():
             print(saved_model.model.summary())
             pass
         if eval_models:
+            # TODO find where does s come from
             print(saved_model, 'tloss=', s[0], 'tacc=', s[1])
         print('------------------------------------------------------------------------')
         test_movies = {}

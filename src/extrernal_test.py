@@ -12,7 +12,7 @@ import urllib.request
 from PIL import Image
 import data_manage as dm
 from os.path import isfile, join
-from resizeimage import resizeimage
+import cv2 as cv
 
 
 def log(poster_url, poster_name):
@@ -66,9 +66,12 @@ def download(poster_url, fake_id):
         resize_path = images_dir + str(r) + "/" + fake_id + '.jpg'
         with open(save_path, 'r+b') as f:
             with Image.open(f) as image:
+                """
                 cover = resizeimage.resize_cover(image, [i, j])
                 cover.save(resize_path, image.format)
-
+                """
+                cover = cv.resize(image, (i, j), interpolation=cv.INTER_AREA)
+                cv.imwrite(resize_path, cover)
     return True
 
 
@@ -89,15 +92,19 @@ def main():
     """
 
     models_dir = 'cnn_model_results/models'
-    pic_name = str(sys.argv[1])
+    #pic_name = str(sys.argv[1])
     pic_url = input('poster url: ')
     genres = 'four'
 
-    fid = log(pic_url, pic_name)
-    download(pic_url, fid)
-    test(models_dir, pic_name, genres)
+    cover = cv.resize([[1]], (2, 2), interpolation=cv.INTER_AREA)
+    #cv.imwrite(resize_path, cover)
+    print(cover)
 
-    print('FID -->', fid)
+    #fid = log(pic_url, pic_name)
+    #download(pic_url, fid)
+    #test(models_dir, pic_name, genres)
+
+    #print('FID -->', fid)
 
     return True
 
