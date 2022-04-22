@@ -11,7 +11,7 @@ import pandas as pd
 from PIL import Image
 import urllib.request
 
-images_dir = 'data/images/'
+images_dir = '../img'
 parsed_movies = []
 
 
@@ -23,7 +23,7 @@ class Movie:
 
     movie_id = 0
     title = ''
-    year = 0
+    year = 0 # We may not use this, dataset is already small
     genres = []
     poster_url = ''
 
@@ -89,10 +89,8 @@ class Movie:
         """
         Checks if movie exists in a dataset.
         """
-        return self.poster_url.startswith('https://') \
-               and 1900 <= self.year <= 2018 \
-               and len(self.title) > 1 \
-               and len(self.genres) > 1
+        return self.poster_url.startswith('https://') and 1900 <= self.year <= 2018 and \
+               len(self.title) > 1 and len(self.genres) > 1
 
     def __str__(self):
         return str(self.title) + '(' + str(self.year) + ')'
@@ -106,9 +104,9 @@ def download_posters(min_year=0):
     for movie in list_movies():
         print(str(movie))
         if movie.year >= min_year:
-            if movie.poster_exists() == False:
+            if not movie.poster_exists():
                 movie.download_poster()
-                if movie.poster_exists() == True:
+                if movie.poster_exists():
                     print('downloaded')
                 else:
                     print('cannot download')
@@ -124,6 +122,7 @@ def list_movies(year=None, genres=None):
     Movie objects.
     """
     if len(parsed_movies) == 0:
+        # TODO actual dataset file will go here
         data = pd.read_csv('data/MovieGenre.csv', encoding='ISO-8859-1')
         for i, r in data.iterrows():
             movie = parse_row(r)
@@ -134,10 +133,10 @@ def list_movies(year=None, genres=None):
 
     result = parsed_movies
 
-    if year != None:
+    if year is not None:
         result = [movie for movie in result if movie.year == year]
 
-    if genres != None:
+    if genres is not None:
         result = [movie for movie in result if movie.has_any_genre(genres)]
 
     return result
@@ -179,8 +178,8 @@ def search_movie(movie_id=None, title=None):
 
 def list_movies_external(year=None, genres=None):
     """
-    Using a different datasheet for external testing. Hence a different function to
-    avoid double name errors.
+    Using a different datasheet for external testing.
+    Hence a different function to avoid double name errors.
     """
     if len(parsed_movies) == 0:
         data = pd.read_csv('data/MovieGenre_external.csv', encoding='ISO-8859-1')
@@ -193,10 +192,10 @@ def list_movies_external(year=None, genres=None):
 
     result = parsed_movies
 
-    if year != None:
+    if year is not None:
         result = [movie for movie in result if movie.year == year]
 
-    if genres != None:
+    if genres is not None:
         result = [movie for movie in result if movie.has_any_genre(genres)]
 
     return result

@@ -22,7 +22,7 @@ def load_data(min_year, max_year, genres, ratio, set_type, verbose=True):
     y = []
 
     for year in reversed(range(min_year, max_year + 1)):
-        if verbose == True:
+        if verbose:
             print('loading', set_type, 'data, movies from year', year, '...')
 
         x_year, y_year = load_data_by_year(year, genres, ratio, set_type)
@@ -30,7 +30,7 @@ def load_data(min_year, max_year, genres, ratio, set_type, verbose=True):
         add_to(x_year, x)
         add_to(y_year, y)
 
-        if verbose == True:
+        if verbose:
             print('movies loaded:', len(x_year))
 
     return np.concatenate(x), np.concatenate(y)
@@ -46,7 +46,7 @@ def load_data_by_year(year, genres, pos_ratio, set_type):
 
     count = 1
     for movie in list_movies(year, genres):
-        if movie.poster_exists() == True:
+        if movie.poster_exists():
             if ((set_type == 'train') and (movie.movie_id % test_ratio != 0) and (count % val_ratio != 0)) \
                     or ((set_type == 'validate') and (movie.movie_id % test_ratio != 0) and (count % val_ratio == 0)) \
                     or ((set_type == 'test') and (movie.movie_id % test_ratio == 0)):

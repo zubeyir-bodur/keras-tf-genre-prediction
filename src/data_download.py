@@ -15,14 +15,14 @@ def download(min_year, ratios, images_dir, original_images_dir):
     to sort movie posters by year of origin, download them and save
     to image directory in various different sizes.
     """
-    if os.path.isdir(original_images_dir) == False:
+    if not os.path.isdir(original_images_dir):
         os.makedirs(original_images_dir)
 
     dm.download_posters(min_year=min_year)
 
     for r in ratios:
         path = images_dir + str(r)
-        if os.path.isdir(path) == False:
+        if not os.path.isdir(path):
             os.makedirs(path)
             command = 'mogrify -path "' + path + '/" -resize ' + str(r) + '% "' + original_images_dir + '*.jpg"'
             print(command)
@@ -37,8 +37,8 @@ def main():
     """
     min_year = 1997
     resizes = [30, 40, 50, 60, 70]
-    images_dir = 'data/images/'
-    original_images_dir = 'data/images/100/'
+    images_dir = '../img/'
+    original_images_dir = '../img/100/'
     status = download(min_year, resizes, images_dir, original_images_dir)
     return status
 

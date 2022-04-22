@@ -95,7 +95,7 @@ def repeat_length(string, length):
 
 def format_preds(movie, genres, preds):
     """
-    Format predictions from multi-hot encoding to human readable structure.
+    Format predictions from multi-hot encoding to human-readable structure.
     """
 
     preds_map = {}
@@ -132,28 +132,24 @@ def main():
         if verbose:
             print(saved_model.model.summary())
             pass
-        if eval_models:
-            # TODO find where does s come from
-            print(saved_model, 'tloss=', s[0], 'tacc=', s[1])
+        # if eval_models:
+        # TODO find where does s come from
+        # He probably tried to plot the train accuracy and loss
+        # But imo that's not how it works :D
+        #   print(saved_model, 'tloss=', s[0], 'tacc=', s[1])
         print('------------------------------------------------------------------------')
-        test_movies = {}
-
-        test_movies['Horror'] = [
+        test_movies = {'Horror': [
             "Dracula 2000",
             "The Blair Witch Project",
             "The Others",
             "Aliens",
             "Aliens vs. Predator: Requiem",
             "Alien: Resurrection"
-        ]
-
-        test_movies['Romance'] = [
+        ], 'Romance': [
             "Notting Hill",
             "Pretty Woman",
             "Bridget Jones's Diary"
-        ]
-
-        test_movies['Action'] = [
+        ], 'Action': [
             "The Matrix",
             "Man of Steel",
             "X-Men: Apocalypse",
@@ -161,9 +157,7 @@ def main():
             "Edge of Tomorrow",
             "Batman Forever",
             "Live Free or Die Hard"
-        ]
-
-        test_movies['Documentary'] = [
+        ], 'Documentary': [
             "Catwalk",
             "Anne Frank Remembered",
             "Jupiter's Wife",
@@ -171,9 +165,7 @@ def main():
             "Fahrenheit 9/11"
             "The Imposter",
             "Cave of Forgotten Dreams"
-        ]
-
-        test_movies['?'] = [
+        ], '?': [
             "Beastly",
             "No Strings Attached",
             "Source Code",
@@ -217,7 +209,7 @@ def main():
             "Life, Animated",
             "Inside Job",
             "Fahrenheit 9/11",
-        ]
+        ]}
 
         if verbose:
             print('')

@@ -69,6 +69,7 @@ def download(poster_url, fake_id):
                 """
                 cover = resizeimage.resize_cover(image, [i, j])
                 cover.save(resize_path, image.format)
+                Use opencv's function instead
                 """
                 cover = cv.resize(image, (i, j), interpolation=cv.INTER_AREA)
                 cv.imwrite(resize_path, cover)
@@ -92,19 +93,19 @@ def main():
     """
 
     models_dir = 'cnn_model_results/models'
-    #pic_name = str(sys.argv[1])
+    pic_name = str(sys.argv[1])
     pic_url = input('poster url: ')
     genres = 'four'
 
-    cover = cv.resize([[1]], (2, 2), interpolation=cv.INTER_AREA)
-    #cv.imwrite(resize_path, cover)
-    print(cover)
+    # cover = cv.resize([[1]], (2, 2), interpolation=cv.INTER_AREA)
+    # cv.imwrite(resize_path, cover)
+    # print(cover)
 
-    #fid = log(pic_url, pic_name)
-    #download(pic_url, fid)
-    #test(models_dir, pic_name, genres)
+    fid = log(pic_url, pic_name)
+    download(pic_url, fid)
+    test(models_dir, pic_name, genres)
 
-    #print('FID -->', fid)
+    print('FID -->', fid)
 
     return True
 

@@ -11,6 +11,9 @@ from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D
 from keras.layers import Activation, Dense, Dropout, Flatten
 
+# I am not really sure if he actually trained the model :D
+from tensorflow import keras
+
 
 def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=None, x_val=None, y_train=None,
           y_val=None, verbose=True):
@@ -30,6 +33,11 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
 
     num_classes = len(y_train[0])
 
+    # TODO
+    #  I think we can, or we should
+    #  make changes in the model, because
+    #  we are still using the subset of the
+    #  dataset that was pretrained
     model = Sequential([
 
         # Layer 1: Convolution with ReLU activation
@@ -95,7 +103,7 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
     )
 
     save_dir = os.path.join(os.getcwd(), 'cnn_model_results/models')
-    if os.path.isdir(save_dir) == False:
+    if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
 
     model_name = 'genres' \
@@ -110,7 +118,7 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
     model.save(model_path)
 
     save_dir_2 = os.path.join(os.getcwd(), 'cnn_model_results/hists')
-    if os.path.isdir(save_dir_2) == False:
+    if not os.path.isdir(save_dir_2):
         os.makedirs(save_dir_2)
 
     hist_name = 'hists' \
