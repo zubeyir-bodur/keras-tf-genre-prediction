@@ -123,7 +123,7 @@ def list_movies(year=None, genres=None):
     """
     if len(parsed_movies) == 0:
         # TODO actual dataset file will go here
-        data = pd.read_csv('data/MovieGenre.csv', encoding='ISO-8859-1')
+        data = pd.read_csv('../data/MovieGenre.csv', encoding='ISO-8859-1')
         for i, r in data.iterrows():
             movie = parse_row(r)
             if movie.is_valid():
@@ -182,7 +182,7 @@ def list_movies_external(year=None, genres=None):
     Hence a different function to avoid double name errors.
     """
     if len(parsed_movies) == 0:
-        data = pd.read_csv('data/MovieGenre_external.csv', encoding='ISO-8859-1')
+        data = pd.read_csv('../data/MovieGenre_external.csv', encoding='ISO-8859-1')
         for i, r in data.iterrows():
             movie = parse_row(r)
             # if movie.is_valid():

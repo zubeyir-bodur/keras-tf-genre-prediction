@@ -9,11 +9,25 @@ import model
 import data_load
 from data_load import load_data
 
+# TODO
+#  Decide what parameters should be tuned
+#   I think, instead of image size
+#   We can tune batch sizes
+#   Hamdi Hoca said its also an important
+#   Hyperparameter
 epochs = 50
+# These can be discarded imo
 min_year = 1997
 max_year = 2017
-ratios = [30, 40, 50, 60, 70]
-lrates = [0.001, 1e-4, 1e-5, 1e-6, 1e-7]
+# New shrink ratios
+ratios = [30, 44, 58, 72, 86, 100]
+# Old shrink ratios - his optimal ratio was 40 %
+# ratios = [30, 40, 50, 60, 70]
+# New learning rate hyperparameters, subject to change
+lrates = [1e-2, 5e-3, 1e-3, 5e-4, 1e-4]
+# Old learning rate parameters
+# His optimal lrate was 1e-4
+# lrates = [0.001, 1e-4, 1e-5, 1e-6, 1e-7]
 genres = ['Horror', 'Romance', 'Action', 'Documentary']
 
 

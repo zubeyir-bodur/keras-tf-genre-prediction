@@ -47,8 +47,8 @@ def download(poster_url, fake_id):
     Downloads the external movie poster from the link provided while calling the function.
     """
 
-    images_dir = 'data/images/'
-    original_images_dir = 'data/images/100/'
+    images_dir = '../img/'
+    original_images_dir = '../img/100/'
 
     save_path = original_images_dir + fake_id + '.jpg'
 
@@ -92,7 +92,7 @@ def main():
     Sets up all parameters to successfully run an external test
     """
 
-    models_dir = 'cnn_model_results/models'
+    models_dir = '../cnn_model_results/models'
     pic_name = str(sys.argv[1])
     pic_url = input('poster url: ')
     genres = 'four'

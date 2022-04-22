@@ -38,6 +38,9 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
     #  make changes in the model, because
     #  we are still using the subset of the
     #  dataset that was pretrained
+    #  For example, some articles say that
+    #  Using more than 2 FC layers do not give any
+    #  benefit whatsoever
     model = Sequential([
 
         # Layer 1: Convolution with ReLU activation
@@ -82,7 +85,7 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
 
     model.compile(
 
-        # Using Categorical Crossentropy loss due to multi-hot encoding
+        # Using Categorical Cross entropy loss due to multi-hot encoding
         loss='categorical_crossentropy',
         optimizer=new_adam,
         metrics=['accuracy']
@@ -102,7 +105,7 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
 
     )
 
-    save_dir = os.path.join(os.getcwd(), 'cnn_model_results/models')
+    save_dir = os.path.join(os.getcwd(), '../cnn_model_results/models')
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
 
@@ -117,7 +120,7 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
     model_path = os.path.join(save_dir, model_name)
     model.save(model_path)
 
-    save_dir_2 = os.path.join(os.getcwd(), 'cnn_model_results/hists')
+    save_dir_2 = os.path.join(os.getcwd(), '../cnn_model_results/hists')
     if not os.path.isdir(save_dir_2):
         os.makedirs(save_dir_2)
 

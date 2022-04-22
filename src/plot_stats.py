@@ -9,7 +9,7 @@ import pickle
 from os import listdir
 import matplotlib.pyplot as plt
 
-pkl_dir = 'cnn_model_results/hists/'
+pkl_dir = '../cnn_model_results/hists/'
 
 
 def plot_hist(hist_path, h):

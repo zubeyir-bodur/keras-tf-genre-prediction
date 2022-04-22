@@ -132,11 +132,11 @@ def main():
         if verbose:
             print(saved_model.model.summary())
             pass
-        # if eval_models:
-        # TODO find where does s come from
-        # He probably tried to plot the train accuracy and loss
-        # But imo that's not how it works :D
-        #   print(saved_model, 'tloss=', s[0], 'tacc=', s[1])
+        if eval_models:
+            # He probably tried to print the test accuracy and loss
+            # Probably this fixes it
+            scores = saved_model.eval()
+            print(saved_model, 'tloss=', scores[0], 'tacc=', scores[1])
         print('------------------------------------------------------------------------')
         test_movies = {'Horror': [
             "Dracula 2000",
