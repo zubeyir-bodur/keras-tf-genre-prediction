@@ -8,6 +8,7 @@ from matplotlib import pyplot as plt
 import cv2
 import pandas
 import keras
+import seaborn
 
 # Defining Array 1
 a = np.array([[1, 2],
