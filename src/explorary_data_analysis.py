@@ -66,20 +66,19 @@ def main():
     # sketchy = pd.read_csv('../data/484da_multihot_encoded.csv', encoding='ISO-8859-1')
     dataset_for_plots = pd.DataFrame(dictionary_genres_only)
     # Create a plot with descending order
-    sum_df = dataset_for_plots.sum().sort_values(ascending=False)
-    sum_df_list = sum_df.tolist()
+    sum_df = dataset_for_plots.sum()
+    sum_df_sorted = sum_df.sort_values(ascending=False)
+    sum_df_list = sum_df_sorted.tolist()
     genres_indices = [i+1 for i in range(len(genres))]
     plt.figure(figsize=(10, 13), dpi=300)
     plt.bar(x=genres_indices, height=sum_df_list, align='center', width=0.6)
-    plot_labels = sum_df.keys().tolist()
+    plot_labels = sum_df_sorted.keys().tolist()
     plt.xticks(genres_indices, plot_labels, rotation=90)
     plt.xlabel("Genre Names")
     plt.ylabel("Number of TV Series")
     plt.title("Bar Plot for Number of Series per Genre")
     plt.savefig("../stats/barplot_genres_count.png")
     plt.show()
-
-    # Create a DF with aliases as genre names, and columns as genre names
 
     # Create the co-occurrence matrix
     num_genres = len(genres)
@@ -103,6 +102,30 @@ def main():
     plt.title("Genre Co-Occurrence Heatmap for the Dataset")
     plt.savefig("../stats/heatmap.png")
     plt.show()
+
+    # Analyze the co-occurrence matrix
+    co_occurrence_matrix_analyzed = [{} for _ in range(num_genres)]
+    for i in range(num_genres):
+        for j in range(num_genres):
+            co_occurrence_matrix_analyzed[i][genres[j]] = (co_occurrence_matrix[i][j] / sum_df.values[i]) * 100
+        co_occurrence_matrix_analyzed[i] = \
+            {k: v for k, v in sorted(co_occurrence_matrix_analyzed[i].items(), key=lambda item: item[1], reverse=True)}
+
+    # print(np.array(co_occurrence_matrix_analyzed))
+    for i in range(num_genres):
+        print(f"Co-Occurrences for {genres[i]}:\n" + str(co_occurrence_matrix_analyzed[i]))
+
+    # Now, plot co-occurrence plots
+    for i in range(num_genres):
+        plt.figure(figsize=(10, 13), dpi=300)
+        plt.bar(x=genres_indices, height=co_occurrence_matrix_analyzed[i].values(), align='center', width=0.6)
+        plot_labels = co_occurrence_matrix_analyzed[i].keys()
+        plt.xticks(genres_indices, plot_labels, rotation=90)
+        plt.xlabel("Genre Names")
+        plt.ylabel("Co-Occurence Percentage")
+        plt.title("Co-Occurence Plot for " + str(genres[i]))
+        plt.savefig("../stats/barplot_cooccur_" + str(genres[i]) + ".png")
+        plt.show()
     return
 
 
