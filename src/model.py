@@ -18,7 +18,7 @@ from tensorflow import keras
 def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=None, x_val=None, y_train=None,
           y_val=None, verbose=True):
     """
-    Builds a ML model using training and validation set.
+    Builds an ML model using training and validation set.
     """
 
     if verbose:
@@ -35,9 +35,7 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
 
     # TODO
     #  I think we can, or we should
-    #  make changes in the model, because
-    #  we are still using the subset of the
-    #  dataset that was pretrained
+    #  make changes in the model.
     #  For example, some articles say that
     #  Using more than 2 FC layers do not give any
     #  benefit whatsoever
