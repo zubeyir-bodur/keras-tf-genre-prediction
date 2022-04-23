@@ -34,7 +34,6 @@ def str_to_list(string):
 
 def main():
     data = pd.read_csv('../data/484da.csv', encoding='ISO-8859-1')
-    print(data)
 
     # 26 different genres
     genres = []
@@ -63,22 +62,46 @@ def main():
         dictionary_genres_only[genres[i]] = inf_for_genre_i
     dataset_new = pd.DataFrame(dictionary)
     # heatmap = sns.heatmap(data)
-    print(dataset_new)
     # dataset_new.to_csv('../data/484da_cleaned.csv')
     # sketchy = pd.read_csv('../data/484da_cleaned.csv', encoding='ISO-8859-1')
-    dataset_genres_only = pd.DataFrame(dictionary_genres_only)
     dataset_for_plots = pd.DataFrame(dictionary_genres_only)
-    print(dataset_for_plots)
     # Create a plot with descending order
     sum_df = dataset_for_plots.sum().sort_values(ascending=False)
-    print(sum_df)
     sum_df_list = sum_df.tolist()
     genres_indices = [i+1 for i in range(len(genres))]
-    plt.figure(figsize=(30, 8))
-    plt.bar(x=genres_indices, height=sum_df_list, align='center', width=0.3)
+    plt.figure(figsize=(10, 13), dpi=300)
+    plt.bar(x=genres_indices, height=sum_df_list, align='center', width=0.6)
     plot_labels = sum_df.keys().tolist()
-    plt.xticks(genres_indices, plot_labels)
-    # heatmap = sns.heatmap(dataset_genres_only)
+    plt.xticks(genres_indices, plot_labels, rotation=90)
+    plt.xlabel("Genre Names")
+    plt.ylabel("Number of TV Series")
+    plt.title("Bar Plot for Number of Series per Genre")
+    plt.savefig("../stats/barplot_genres_count.png")
+    plt.show()
+
+    # Create a DF with aliases as genre names, and columns as genre names
+
+    # Create the co-occurrence matrix
+    num_genres = len(genres)
+    num_samples = len(data.values)
+    co_occurrence_matrix = [[0 for _ in range(len(genres))] for _ in range(len(genres))]
+    # for each tv series
+    for j in range(num_samples):
+        # start from genre i
+        for i in range(num_genres):
+            # if this series contains genre i
+            if dataset_for_plots.values[j][i]:
+                # Look for co-occurrences - ignore the diagonals
+                for k in range(num_genres):
+                    if i != k and dataset_for_plots.values[j][k]:
+                        # I co_occurs with K
+                        co_occurrence_matrix[i][k] += 1
+    plt.figure(figsize=(10, 10), dpi=300)
+    ax = sns.heatmap(co_occurrence_matrix, linewidth=0.5)
+    plt.xticks(genres_indices, genres, rotation=90)
+    plt.yticks(genres_indices, genres, rotation=0)
+    plt.title("Genre Co-Occurrence Heatmap for the Dataset")
+    plt.savefig("../stats/heatmap.png")
     plt.show()
     return
 
