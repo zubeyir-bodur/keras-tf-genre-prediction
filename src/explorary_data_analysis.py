@@ -62,8 +62,8 @@ def main():
         dictionary_genres_only[genres[i]] = inf_for_genre_i
     dataset_new = pd.DataFrame(dictionary)
     # heatmap = sns.heatmap(data)
-    # dataset_new.to_csv('../data/484da_cleaned.csv')
-    # sketchy = pd.read_csv('../data/484da_cleaned.csv', encoding='ISO-8859-1')
+    # dataset_new.to_csv('../data/484da_multihot_encoded.csv')
+    # sketchy = pd.read_csv('../data/484da_multihot_encoded.csv', encoding='ISO-8859-1')
     dataset_for_plots = pd.DataFrame(dictionary_genres_only)
     # Create a plot with descending order
     sum_df = dataset_for_plots.sum().sort_values(ascending=False)
