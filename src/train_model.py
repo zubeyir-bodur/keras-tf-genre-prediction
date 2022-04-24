@@ -12,6 +12,8 @@ from PIL import Image
 import io
 import glob
 from sklearn.model_selection import train_test_split
+import os
+
 
 epochs = 50
 # These can be discarded imo
@@ -31,8 +33,6 @@ lrates = [1e-4] # Use 1 * 10^-4 for now
 # New genre: Reality-TV is added
 genres = ['Romance', 'Action', 'Horror', 'Documentary', 'Reality-TV']
 # genres = ['Horror', 'Romance', 'Action', 'Documentary']
-
-images_dir = "../img/44/"
 
 
 def img_to_rgb(img_file_path):
@@ -68,22 +68,48 @@ def main(ratios_):
             y.append([row['Romance'], row['Action'], row['Horror'], row['Documentary'], row['Reality-TV']])
         y = np.array(y)
         # print(y)
-
-        for filename in glob.glob(images_dir + "*"):
+        images_dir = "../img/" + str(ratio) + "/"
+        globes = glob.glob(images_dir + "*")
+        print(f"Found {len(globes)} images")
+        for filename in globes:
             x_ = img_to_rgb(filename)
-            # TODO dont read all of the files
-            #  read the ones that exist in the dataset that is just read
-            # print(f"filename = {filename} :")
-            # print(np.array(x_).shape)
             x.append(x_)
         x = np.array(x)
+        print(x.shape)
+        print(y.shape)
+        if x.shape[0] != y.shape[0]:
+          print("X and Y lenghts are not equal.")
+          print("This means one image was missing in our dataset")
+          print("Now, we will discard the label that was missing, from our Y's")
+          for index, row in dataframe.iterrows():
+            file_name = "../img/" + str(ratio) + "/" + str(row['ID']) + ".jpg"
+            # print(file_name)
+            # If the image does not exist
+            if not os.path.isfile(file_name):
+              print(index)
+              # Discard the label - Delete this row from Y's
+              y = np.delete(y, index, axis=0)
+
+        print(x.shape)
+        print(y.shape)
 
         # Split the dataset into 3 - Train - Validation - Test
-        x_train, y_train, x_test, y_test = train_test_split(x, y, test_size=0.4, random_state=42)
-        x_valid, y_valid, x_test, y_test = train_test_split(x_test, y_test, test_size=0.25, random_state=42)
+        x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.4, random_state=42)
 
-        np.save("../cnn_model_results/test/x_test.npy", x_test)
-        np.save("../cnn_model_results/test/y_test.npy", y_test)
+        print(x_train.shape)
+        print(x_test.shape)
+        print(y_train.shape)
+        print(y_test.shape)
+
+        x_valid, x_test, y_valid, y_test = train_test_split(x_test, y_test, test_size=0.25, random_state=42)
+        test_path = "../cnn_model_results/test"
+        x_test_path = test_path + "/x_test.npy"
+        y_test_path = test_path + "/y_test.npy"
+        if not os.path.isdir(test_path):
+          os.makedirs(test_path)
+
+        np.save(x_test_path, x_test)
+        np.save(y_test_path, y_test)
         print(x_train.shape)
         print(x_valid.shape)
         print(x_test.shape)
@@ -91,7 +117,7 @@ def main(ratios_):
         print(y_valid.shape)
         print(y_test.shape)
 
-        # TODO Connect Repo to Google Colab
+        # Start training
         for lr in lrates:
             model.build(1, min_year, max_year, genres, ratio, epochs, lr,
                         x_train=x_train, y_train=y_train,
