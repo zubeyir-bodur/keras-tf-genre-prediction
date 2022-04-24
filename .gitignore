@@ -129,4 +129,5 @@ dmypy.json
 .pyre/
 
 # For this project - do not commit downloaded images
-img/
+img/100
+img/orig
