@@ -33,12 +33,6 @@ def build(style, min_year, max_year, genres, ratio, epochs, lrate=1e-3, x_train=
 
     num_classes = len(y_train[0])
 
-    # TODO
-    #  I think we can, or we should
-    #  make changes in the model.
-    #  For example, some articles say that
-    #  Using more than 2 FC layers do not give any
-    #  benefit whatsoever
     model = Sequential([
 
         # Layer 1: Convolution with ReLU activation

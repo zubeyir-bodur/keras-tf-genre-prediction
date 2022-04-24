@@ -47,8 +47,8 @@ def download(poster_url, fake_id):
     Downloads the external movie poster from the link provided while calling the function.
     """
 
-    images_dir = '../img/'
-    original_images_dir = '../img/100/'
+    images_dir = '../../img/'
+    original_images_dir = '../../img/100/'
 
     save_path = original_images_dir + fake_id + '.jpg'
 

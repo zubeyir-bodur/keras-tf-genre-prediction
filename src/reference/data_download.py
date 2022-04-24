@@ -37,8 +37,8 @@ def main():
     """
     min_year = 1997
     resizes = [30, 40, 50, 60, 70]
-    images_dir = '../img/'
-    original_images_dir = '../img/100/'
+    images_dir = '../../img/'
+    original_images_dir = '../../img/100/'
     status = download(min_year, resizes, images_dir, original_images_dir)
     return status
 

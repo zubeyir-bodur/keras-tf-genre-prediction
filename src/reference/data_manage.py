@@ -11,7 +11,7 @@ import pandas as pd
 from PIL import Image
 import urllib.request
 
-images_dir = '../img'
+images_dir = '../../img'
 parsed_movies = []
 
 

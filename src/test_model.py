@@ -7,9 +7,8 @@ Adopted From: Nirman Dave, https://github.com/nddave/Movie-Genre-Prediction
 
 import operator
 import numpy as np
-import data_load as dl
 from os import listdir
-import data_manage as dm
+from src.reference import data_manage as dm, data_load as dl
 from os.path import isfile, join
 from keras.models import load_model
 
